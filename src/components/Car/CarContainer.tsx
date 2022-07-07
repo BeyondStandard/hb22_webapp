@@ -37,7 +37,6 @@ export default function CarContainer() {
                     {/* <CarModel /> */}
                     <ObjModelLoader />
                     <OrbitControls />
-                    <Environment preset="city" background={false} />
                 </Suspense>
             </Canvas>
         </CarBox>
