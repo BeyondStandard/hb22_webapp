@@ -18,7 +18,7 @@ const CarBox = styled("div")(() => ({
     justifyContent: "center",
     margin: "0 auto 1rem auto",
     minWidth: "250px",
-    maxWidth: "850px",
+    maxWidth: "500px",
 }))
 
 export default function CarContainer() {
