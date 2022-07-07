@@ -6,13 +6,11 @@ import theme from "../theme/theme.js"
 
 const App: React.FC = () => {
   return (
-    <>
-     <ThemeProvider theme={theme}>
-       <Container>
-         <CarContainer />
-       </Container>
-     </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <CarContainer />
+      </Container>
+    </ThemeProvider>
   )
 }
 
