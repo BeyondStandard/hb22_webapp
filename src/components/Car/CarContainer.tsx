@@ -1,7 +1,10 @@
-import React from "react"
+import React, { Suspense } from "react"
 // import PropTypes from 'prop-types'
 // import { Box } from '@mui/system'
 import { styled } from "@mui/material"
+import { Canvas } from "@react-three/fiber"
+import CarModel from "./CarModel"
+import { Environment, OrbitControls } from "@react-three/drei"
 
 const CarBox = styled("div")(() => ({
     display: "flex",
@@ -15,9 +18,19 @@ const CarBox = styled("div")(() => ({
     justifyContent: "center",
     margin: "0 auto 1rem auto",
     minWidth: "250px",
-    maxWidth: "850px",
+    maxWidth: "500px",
 }))
 
 export default function CarContainer() {
-    return <CarBox>Hier könnte Ihr Car Model stehen!</CarBox>
+    return (
+        <CarBox>
+            <Canvas>
+                <Suspense fallback={null}>
+                    <CarModel />
+                    <OrbitControls />
+                    <Environment preset="city" background={false} />
+                </Suspense>
+            </Canvas>
+        </CarBox>
+    )
 }

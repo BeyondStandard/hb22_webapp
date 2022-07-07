@@ -14,8 +14,11 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.8.7",
+    "@react-three/drei": "^9.16.1",
+    "@react-three/fiber": "^8.0.27",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "three": "^0.142.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
