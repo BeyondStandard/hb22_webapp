@@ -21,7 +21,7 @@ const App: React.FC = () => {
         const timeout = setTimeout(() => {
             setPage(pages.model)
             console.log("Test")
-        }, 3000)
+        }, 100)
 
         return () => clearTimeout(timeout)
     }, [])

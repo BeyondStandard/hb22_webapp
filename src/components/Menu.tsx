@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Box, Tabs, Tab, Typography } from "@mui/material"
 
 interface TabPanelProps {
@@ -29,10 +29,28 @@ function TabPanel(props: TabPanelProps) {
 
 function Menu() {
     const [value, setValue] = useState(0)
+    const [data, setData] = useState(null)
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue)
     }
+
+
+    useEffect(() => {
+        fetch(`https://hb22-api-gqhhunbdaa-ey.a.run.app/get_engine`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `HTTP error: The status is ${response.status}`
+              );
+            }
+            return response.json();
+          })
+          .then((actualData) => console.log(actualData))
+          .catch((err) => {
+            console.log(err.message);
+          });
+      }, []);
 
     return (
         <>
