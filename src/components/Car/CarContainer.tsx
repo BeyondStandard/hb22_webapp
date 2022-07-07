@@ -28,7 +28,6 @@ export default function CarContainer() {
                 <Suspense fallback={null}>
                     <CarModel />
                     <OrbitControls />
-                    <Environment preset="city" background={false} />
                 </Suspense>
             </Canvas>
         </CarBox>
