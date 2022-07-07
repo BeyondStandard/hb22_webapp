@@ -2,6 +2,7 @@ import React from "react"
 // import PropTypes from 'prop-types'
 // import { Box } from '@mui/system'
 import { styled } from "@mui/material"
+import CarModel from "./CarModel"
 
 const CarBox = styled("div")(() => ({
   display: "flex",
@@ -19,5 +20,7 @@ const CarBox = styled("div")(() => ({
 }))
 
 export default function CarContainer() {
-  return <CarBox>Hier könnte Ihr Car Model stehen!</CarBox>
+  return <CarBox>
+    <CarModel></CarModel>
+  </CarBox>
 }
