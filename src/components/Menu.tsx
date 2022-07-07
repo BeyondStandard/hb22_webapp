@@ -19,7 +19,7 @@ function TabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
+                <Box component="div" sx={{ p: 3 }}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -35,30 +35,31 @@ function Menu() {
         setValue(newValue)
     }
 
-
     useEffect(() => {
         fetch(`https://hb22-api-gqhhunbdaa-ey.a.run.app/get_engine`)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(
-                `HTTP error: The status is ${response.status}`
-              );
-            }
-            return response.json();
-          })
-          .then((actualData) => console.log(actualData))
-          .catch((err) => {
-            console.log(err.message);
-          });
-      }, []);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(
+                        `HTTP error: The status is ${response.status}`,
+                    )
+                }
+                return response.json()
+            })
+            .then((actualData) => console.log(actualData))
+            .catch((err) => {
+                console.log(err.message)
+            })
+    }, [])
 
     return (
         <>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box component="div">
                 <Tabs
                     value={value}
                     onChange={handleChange}
                     aria-label="basic tabs example"
+                    centered
+                    variant="fullWidth"
                 >
                     <Tab label="Item One" />
                     <Tab label="Item Two" />
