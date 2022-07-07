@@ -22,14 +22,15 @@ const CarBox = styled("div")(() => ({
 }))
 
 export default function CarContainer() {
-  return (
-  <CarBox>
-    <Canvas>
-    <Suspense fallback={null}>
-      <CarModel/>
-      <OrbitControls />
-      <Environment preset="city" background={false} />
-    </Suspense>
-    </Canvas>
-  </CarBox>
-)}
+    return (
+        <CarBox>
+            <Canvas>
+                <Suspense fallback={null}>
+                    <CarModel />
+                    <OrbitControls />
+                    <Environment preset="city" background={false} />
+                </Suspense>
+            </Canvas>
+        </CarBox>
+    )
+}

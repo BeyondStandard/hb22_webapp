@@ -19,7 +19,7 @@ function TabPanel(props: TabPanelProps) {
             {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3 }}>
+                <Box component="div" sx={{ p: 3 }}>
                     <Typography>{children}</Typography>
                 </Box>
             )}
@@ -36,7 +36,7 @@ function Menu() {
 
     return (
         <>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box component="div">
                 <Tabs
                     value={value}
                     onChange={handleChange}
