@@ -5,6 +5,12 @@ body {
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* background: rgb(240, 247, 255);
+    background: linear-gradient(
+        270deg,
+        rgba(240, 247, 255, 1) 75%,
+        rgba(155, 216, 255, 1) 100%
+    ); */
 }
 
 code {

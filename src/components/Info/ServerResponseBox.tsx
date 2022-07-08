@@ -1,21 +1,16 @@
 import * as React from "react"
 import { Grid, Paper, Typography, useTheme } from "@mui/material"
 
-export default function RoundedBox() {
+export default function ServerResponseBox() {
     const theme = useTheme()
     return (
-        <Paper
-            elevation={0}
+        <div
             style={{
                 maxWidth: "25rem",
-                // backgroundColor: theme.palette.secondary.main,
                 border: "2px solid lightblue",
                 margin: "2rem auto 2rem auto",
-                // borderBottomRightRadius: "50px",
-                // borderTopRightRadius: "25%",
-                // borderBottomLeftRadius: "25%",
-                // borderTopLeftRadius: "25%",
-                borderRadius: "50px",
+                color: "white",
+                backgroundColor: "rgb(255, 255, 255, 0.1)",
             }}
         >
             <Grid
@@ -32,6 +27,6 @@ export default function RoundedBox() {
                     <Typography variant="body1">1234 ms</Typography>
                 </Grid>
             </Grid>
-        </Paper>
+        </div>
     )
 }

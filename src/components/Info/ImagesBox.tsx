@@ -3,8 +3,9 @@ import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
 import ImageListItemBar from "@mui/material/ImageListItemBar"
 import { Paper, useTheme } from "@mui/material"
+import AudioPlayer from "./AudioPlayer"
 
-export default function ImagesBox() {
+export default function ImagesBox({ data }: any) {
     const theme = useTheme()
     return (
         <Paper
@@ -39,6 +40,7 @@ export default function ImagesBox() {
                     </ImageListItem>
                 ))}
             </ImageList>
+            <AudioPlayer file={data.audio_encoded} />
         </Paper>
     )
 }

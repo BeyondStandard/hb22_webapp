@@ -1,6 +1,6 @@
 /* eslint-disable */
-import * as THREE from "three"
 import * as React from "react"
+import * as THREE from "three"
 import { useRef, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
@@ -9,29 +9,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader"
 import { useLoader } from "@react-three/fiber"
 import { useTexture } from "@react-three/drei"
 
-function Box(props: JSX.IntrinsicElements["mesh"]) {
-    // This reference will give us direct access to the THREE.Mesh object
-    const ref = useRef<THREE.Mesh>(null!)
-    // Hold state for hovered and clicked events
-    const [hovered, hover] = useState(false)
-    const [clicked, click] = useState(false)
-    // Rotate mesh every frame, this is outside of React without overhead
-    useFrame((state, delta) => (ref.current.rotation.x += 0.01))
-
-    return (
-        <mesh
-            {...props}
-            ref={ref}
-            scale={clicked ? 1.5 : 1}
-            onClick={(event) => click(!clicked)}
-            onPointerOver={(event) => hover(true)}
-            onPointerOut={(event) => hover(false)}
-        >
-            <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
-        </mesh>
-    )
-}
+// import { useAnimations } from "@react-three/drei"
 
 // function loadObject(obj: any, mc: any) {
 //     return new OBJLoader().setMaterials(mc).load(obj, (group) => {})
@@ -40,10 +18,62 @@ function Box(props: JSX.IntrinsicElements["mesh"]) {
 // function loadMaterial(obj: any, mtl: any) {
 //     return new MTLLoader().setPath(obj).load(mtl, (mc) => {
 //         loadObject(obj, mc)
+//         return new OBJLoader().setMaterials(mc).load(obj, (group) => {
+
+//         })
 //     })
 // }
 
+// export default function Model(props) {
+//     const group = useRef()
+//     const { nodes, materials, animations } = useGLTF("/armada.gltf")
+//     const { actions } = useAnimations(animations, group)
+
+//     return (
+//         <group ref={group} {...props} dispose={null}>
+//             <group rotation={[Math.PI / 2, 0, 0]} scale={[0.01, 0.01, 0.01]}>
+//                 <primitive object={nodes.mixamorigHips} />
+//                 <skinnedMesh
+//                     material={materials.Ch03_Body}
+//                     geometry={nodes.Ch03.geometry}
+//                     skeleton={nodes.Ch03.skeleton}
+//                 />
+//             </group>
+//         </group>
+//     )
+// }
+
+// function Model(props: any) {
+//     const ref = React.useRef()
+
+//     const { objSrc, mtlSrc, textureSrc } = props
+
+//     const materials = useLoader(MTLLoader, mtlSrc, (loader) => {
+//         const loadingManager = new THREE.LoadingManager()
+//         loadingManager.setURLModifier((url) => {
+//             if (_.endsWith(url, ".png") && textureSrc) {
+//                 return textureSrc
+//             }
+//             return url
+//         })
+//         loader.manager = loadingManager
+//     })
+
+//     let object = useLoader(OBJLoader, objSrc, (loader) => {
+//         materials.preload()
+//         loader.setMaterials(materials)
+//     })
+
+//     return (
+//         <primitive ref={ref} object={object}>
+//             <ambientLight />
+//             <pointLight position={[0, 10, 0]} />
+//         </primitive>
+//     )
+// }
+
 export default function ObjModelLoader() {
+    const [group, setGroup] = useState<THREE.Group>(new THREE.Group())
     const ref = useRef<THREE.Mesh>(null!)
 
     const mtlFile = "/src/assets/models/LowPoly/Textures/carPolice.png"
@@ -51,32 +81,36 @@ export default function ObjModelLoader() {
     const objFile2 = "/src/assets/models/LowPoly/Low_Poly_Vehicles_car01.obj"
     const mtlFile2 = "/src/assets/models/LowPoly/Textures/car01.png"
 
-    // const group = loadMaterial(objFile2, mtlFile2)
-    // console.log(group)
+    const texture = useLoader(MTLLoader, mtlFile2)
+    const obj = useLoader(OBJLoader, objFile2, (loader) => {
+        texture.preload()
+        // loader.setMaterials(texture)
+    })
 
-    const mtl = useLoader(TextureLoader, mtlFile2)
-    const obj = useLoader(OBJLoader, objFile2)
-
-    // useFrame((state, delta) => (ref.current.rotation.x += 0.01))
+    // const mtlLoader = new MTLLoader().setPath(objFile2).load(mtlFile2, (mc) => {
+    //     mc.preload()
+    //     var objLoader = new OBJLoader()
+    //         .setMaterials(mc)
+    //         .load(objFile2, (group) => {
+    //             setGroup(group)
+    //         })
+    // })
 
     return (
         <>
-            <ambientLight intensity={0.2} />
+            {/* <ambientLight intensity={0.2} /> */}
             {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
             <mesh>
-                <primitive object={obj} scale={[0.01, 0.01, 0.01]} position={[0, -1, 0]} />
+                <primitive
+                    material={texture}
+                    object={obj}
+                    scale={[0.01, 0.01, 0.01]}
+                    position={[0, -1, 0]}
+                />
                 {/* <sphereGeometry args={[1, 32, 32]} /> */}
-                <meshStandardMaterial map={mtl} attach="material" />
+                {/* <meshStandardMaterial map={mtl} attach="material" /> */}
             </mesh>
+            {/* <Model objSrc={objFile2} mtlSrc={mtlFile2} textureSrc={mtlFile2} /> */}
         </>
     )
-    // return (
-    //     <Canvas>
-    //         <ambientLight intensity={0.5} />
-    //         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-    //         <pointLight position={[-10, -10, -10]} />
-    //         <Box position={[-1.2, 0, 0]} />
-    //         <Box position={[1.2, 0, 0]} />
-    //     </Canvas>
-    // )
 }

@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { useGLTF } from "@react-three/drei"
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
-import { useLoader } from '@react-three/fiber'
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
+import { useLoader } from "@react-three/fiber"
 
 export default function CarModel({ ...props }) {
     const group = useRef()

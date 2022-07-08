@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from "react"
-import { Stack, Grid, styled, ThemeProvider } from "@mui/material"
+import { styled, ThemeProvider } from "@mui/material"
 
-import Menu from "../components/Menu"
 import CarContainer from "../components/Car/CarContainer"
 import theme from "../theme/theme.js"
 import LogoTextImg from "../assets/logo_text.png"
-// import AudioVisualizer from "./AudioVisualizer"
 import AudioLoadingAnimation from "../components/AudioLoadingAnimation"
 import DigitalClock from "../components/Info/DigitalClock"
-import BasicSpeedDial from "../components/BasicSpeedDial"
-import FixedBottomNavigation from "../components/FixedBottomNavigation"
 import CarInfoList from "../components/Info/CarInfoList"
 import InfoBox from "../components/Info/InfoBox"
 import CarTitle from "../components/Info/CarTitle"
 import ImagesBox from "../components/Info/ImagesBox"
-import RoundedBox from "../components/Info/RoundedBox"
+import ServerResponseBox from "../components/Info/ServerResponseBox"
 import AccuracyTable from "../components/Info/AccuracyTable"
+import useFetch from "../utils/hooks/useFetch"
 
 const pages = {
     loading: 0,
     model: 1,
 }
 
-const subPages = {
-    car: 0,
-    information: 1,
-    further: 2,
+const carTypes = {
+    bus: 0,
+    electric: 1,
+    formula: 2,
+    jeep: 3,
+    pickUp: 4,
+    sedan: 5,
+    sedanSport: 6,
+    police: 7,
+    suv: 8,
+    van: 9,
+    delivery: 10,
+    car1: 11,
+    car2: 12,
+    car3: 13,
+    pickUp1: 14,
+    pickUp2: 15,
+    ambulance: 16,
 }
 
 const ClockBox = styled("div")(() => ({
-    position: "absolute",
-    right: "1rem",
-    top: "1rem",
+    height: "3rem",
 }))
 
 const AppContainer = styled("div")({
@@ -49,10 +58,13 @@ const CarDisplayContainer = styled("div")({
 const InfoContainer = styled("div")({
     width: "30vw",
     position: "absolute",
-    right: 0,
-    top: "5rem",
-    overflow: "auto",
-    margin: "0 1rem 0 1rem",
+    right: "1rem",
+    top: "1rem",
+    bottom: "1rem",
+    overflow: "scroll",
+    borderRadius: "12px",
+    boxShadow:
+        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
 })
 
 const LogoTextContainer = styled("div")({
@@ -64,12 +76,12 @@ const LogoTextContainer = styled("div")({
 const App: React.FC = () => {
     // const countRef = useRef()
     const [page, setPage] = useState(pages.loading)
-    const [subPage, setSubPage] = useState(0)
+    const [audio, setAudio] = useState(null)
+    const { data } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             setPage(pages.model)
-            console.log("Test")
         }, 100)
 
         return () => clearTimeout(timeout)
@@ -78,26 +90,41 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={theme}>
             <AppContainer>
-                <ClockBox>
-                    <DigitalClock />
-                </ClockBox>
                 <LogoTextContainer>
-                    <img src={LogoTextImg} style={{ width: "15rem" }} />
+                    <img
+                        src={LogoTextImg}
+                        style={{
+                            width: "20rem",
+                            transform: "translate(-3rem, -8rem)",
+                        }}
+                    />
                 </LogoTextContainer>
                 {page == 0 ? (
                     <AudioLoadingAnimation />
                 ) : (
                     <>
                         <CarDisplayContainer>
-                            <CarContainer />
+                            <CarContainer carType={carTypes.formula} />
                         </CarDisplayContainer>
-                        <InfoContainer>
-                            <InfoBox />
-                            <CarTitle />
-                            <RoundedBox />
-                            <CarInfoList />
-                            <ImagesBox />
-                            <AccuracyTable />
+                        <InfoContainer
+                            style={{
+                                backgroundColor: theme.palette.secondary.main,
+                            }}
+                        >
+                            <div style={{ overflowY: "hidden" }}>
+                                <ClockBox>
+                                    <DigitalClock />
+                                </ClockBox>
+                                <InfoBox
+                                    icon
+                                    text="Hier können Sie alle Informationen über dieses Fahrzeug einsehen."
+                                />
+                                <CarTitle carTitle={data.car_type} />
+                                <ServerResponseBox />
+                                <CarInfoList />
+                                <ImagesBox data={data} />
+                                <AccuracyTable />
+                            </div>
                         </InfoContainer>
                     </>
                 )}

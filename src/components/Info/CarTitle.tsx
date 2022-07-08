@@ -6,13 +6,21 @@ const TitleContainer = styled("div")({
     textAlign: "center",
 })
 
-export default function CarTitle() {
+interface ITitleProps {
+    carTitle: string
+}
+
+const CarTitle: React.FC<ITitleProps> = ({ carTitle }) => {
     return (
         <TitleContainer>
-            <Typography variant="h3">Car Title</Typography>
-            <Typography variant="subtitle1" color="gray">
-                Car Subtitle
+            <Typography variant="h3" style={{ color: "white" }}>
+                {carTitle}
             </Typography>
+            {/* <Typography variant="subtitle1" color="lightgray">
+                Car Subtitle
+            </Typography> */}
         </TitleContainer>
     )
 }
+
+export default CarTitle
