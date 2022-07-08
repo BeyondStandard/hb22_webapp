@@ -17,7 +17,7 @@ function Clock() {
     }, [])
 
     return (
-        <Typography variant="h1" component="div" gutterBottom color="gray">
+        <Typography variant="body1" component="div" gutterBottom color="gray">
             {Moment(date).format("hh:mm").toString()}
         </Typography>
     )

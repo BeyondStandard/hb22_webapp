@@ -460,6 +460,13 @@
     prop-types "^15.8.1"
     react-is "^17.0.2"
 
+"@mui/icons-material@^5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.8.4.tgz#3f2907c9f8f5ce4d754cb8fb4b68b5a1abf4d095"
+  integrity sha512-9Z/vyj2szvEhGWDvb+gG875bOGm8b8rlHBKOD1+nA3PcgC3fV6W1AU6pfOorPeBfH2X4mb9Boe97vHvaSndQvA==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+
 "@mui/material@^5.8.7":
   version "5.8.7"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.8.7.tgz"
@@ -2418,11 +2425,6 @@ react-composer@^5.0.3:
   integrity sha512-1uWd07EME6XZvMfapwZmc7NgCZqDemcvicRi3wMJzXsQLvZ3L7fTHVyPy1bZdnWXM4iPjYuNE+uJ41MLKeTtnA==
   dependencies:
     prop-types "^15.6.0"
-
-react-digital-clock@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/react-digital-clock/-/react-digital-clock-0.1.2.tgz#e7bd33a57aa0ff6d7ca7ddb4a30cd584ecb63db2"
-  integrity sha512-fVh245QptNMiPs/GplGBiwtcQIjv9vuf7chGfD5DL+XBp36UgcKfDUkSjdR44asGVMjXdIALYHP0JjEk9MxaGw==
 
 react-dom@^18.0.0:
   version "18.2.0"
