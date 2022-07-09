@@ -44,18 +44,8 @@ const ImagesBox: React.FC<IProps> = ({ data }) => {
             >
                 {itemData.map((item) => (
                     <ImageListItem key={item.img} cols={3}>
-                        <img
-                            // src={`${item.img}?w=248&fit=crop&auto=format`}
-                            src={item.img}
-                            // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                            loading="lazy"
-                        />
-                        <ImageListItemBar
-                            title={item.title}
-                            // subtitle={<span>by: {item.author}</span>}
-                            position="below"
-                        />
+                        <img src={item.img} alt={item.title} loading="lazy" />
+                        <ImageListItemBar title={item.title} position="below" />
                     </ImageListItem>
                 ))}
             </ImageList>

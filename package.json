@@ -17,6 +17,7 @@
     "@mui/material": "^5.8.7",
     "@react-three/drei": "^9.16.1",
     "@react-three/fiber": "^8.0.27",
+    "@tweenjs/tween.js": "^18",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "moment": "^2.29.4",

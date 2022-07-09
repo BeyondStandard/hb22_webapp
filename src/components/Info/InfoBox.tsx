@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Grid, Paper, useTheme } from "@mui/material"
+import { Grid, useTheme } from "@mui/material"
 import QuestionMarkSharpIcon from "@mui/icons-material/QuestionMarkSharp"
 
 interface InfoBoxProps {

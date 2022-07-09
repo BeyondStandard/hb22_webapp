@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { styled, ThemeProvider, Button } from "@mui/material"
+import { styled, ThemeProvider, Button, Grid, Typography } from "@mui/material"
 
 import CarContainer from "../components/Car/CarContainer"
 import theme from "../theme/theme.js"
@@ -13,13 +13,16 @@ import ImagesBox from "../components/Info/ImagesBox"
 import ServerResponseBox from "../components/Info/ServerResponseBox"
 import AccuracyTable from "../components/Info/AccuracyTable"
 import useFetch from "../utils/hooks/useFetch"
+import gasolineImage from "./../assets/gasoline.png"
+import dieselImage from "./../assets/Fuel.png"
+import electricImage from "./../assets/electric.png"
 
 const pages = {
     loading: 0,
     model: 1,
 }
 
-// bus, minivan, pickup, sportscar, jeep, truck, crossover, car
+// bus, minivan, pickup, sportscar, jeep, truck, crossover, car, outsidecars
 const carTypes = {
     bus: {
         id: 0,
@@ -51,10 +54,10 @@ const carTypes = {
         position: [10, 0, 0],
         rotation: [0.2, -1.5, 0],
     },
-    car: {
+    sedan: {
         id: 5,
         scale: [2, 2, 2],
-        position: [10, 0, 0],
+        position: [0, -1, 0],
         rotation: [0.2, -1.5, 0],
     },
     sedanSport: {
@@ -117,7 +120,7 @@ const carTypes = {
         position: [10, 0, 0],
         rotation: [0.2, -1.5, 0],
     },
-    ambulance: {
+    outsidecars: {
         id: 16,
         scale: [2, 2, 2],
         position: [10, 0, 0],
@@ -165,10 +168,27 @@ const ButtonContainer = styled("div")({
     bottom: "1rem",
 })
 
+const SecondaryInfoContainer = styled("div")({
+    position: "absolute",
+    top: "50%",
+    transform: "translate(2rem, -50%)",
+})
+
+const IconBackground = styled("div")({
+    position: "absolute",
+    backgroundColor: "rgb(255, 255, 255, 0.8)",
+    width: "90px",
+    height: "90px",
+    // borderRadius: "50%",
+    // top: "-3px",
+    // left: "50%",
+    // transform: "translate(-50%, 0)",
+})
+
 const App: React.FC = () => {
     // const countRef = useRef()
     const [page, setPage] = useState(pages.loading)
-    const { data } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
+    const { data, refetch } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
     const [isPaused, setPause] = useState(false)
     const ws = useRef<WebSocket | null>(null)
 
@@ -191,6 +211,7 @@ const App: React.FC = () => {
             if (isPaused) return
             const message = JSON.parse(e.data)
             if (message["state"] == true) {
+                refetch()
                 setPage(pages.model)
 
                 // if (ws.current) ws.current.close()
@@ -203,8 +224,18 @@ const App: React.FC = () => {
         setPage(pages.loading)
     }
 
+    const handleLoadLatestModel = () => {
+        setPause(true)
+        setPage(pages.model)
+    }
+
     if (!data) {
-        return <div>Data endpoint not up</div>
+        return (
+            <div>
+                <div>Data endpoint not up</div>
+                <AudioLoadingAnimation />
+            </div>
+        )
     }
 
     console.log(data)
@@ -222,21 +253,87 @@ const App: React.FC = () => {
                     />
                 </LogoTextContainer>
                 {page == 0 ? (
-                    <AudioLoadingAnimation />
+                    <>
+                        <AudioLoadingAnimation />
+                        <ButtonContainer>
+                            <Button
+                                variant="outlined"
+                                onClick={handleLoadLatestModel}
+                            >
+                                Load Latest Model
+                            </Button>
+                        </ButtonContainer>
+                    </>
                 ) : (
                     <>
                         <CarDisplayContainer>
                             <CarContainer
                                 carType={
                                     carTypes[
-                                        data.car_type as keyof typeof carTypes
+                                        data.probability.winner_label.toLowerCase() as keyof typeof carTypes
                                     ]
                                 }
                             />
                         </CarDisplayContainer>
+                        <SecondaryInfoContainer>
+                            <Grid
+                                container
+                                justifyContent="center"
+                                alignItems="center"
+                                direction="column"
+                                spacing={5}
+                            >
+                                <Grid
+                                    item
+                                    xs={4}
+                                    style={{
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    {data.engine_type != "gasoline" && (
+                                        <IconBackground />
+                                    )}
+                                    <img src={gasolineImage} width="50px" />
+                                    <Typography variant="body1">
+                                        Gasoline
+                                    </Typography>
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={4}
+                                    style={{
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    {data.engine_type != "diesel" ||
+                                        (!data.engine_type && (
+                                            <IconBackground />
+                                        ))}
+                                    <img src={dieselImage} width="50px" />
+                                    <Typography variant="body1">
+                                        Diesel
+                                    </Typography>
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={4}
+                                    style={{ textAlign: "center" }}
+                                >
+                                    {data.engine_type != "electric" && (
+                                        <IconBackground />
+                                    )}
+                                    <img src={electricImage} width="50px" />
+                                    <Typography variant="body1">
+                                        Electric
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </SecondaryInfoContainer>
                         <InfoContainer
-                            style={{
+                            sx={{
+                                "&::-webkit-scrollbar": { display: "none" },
                                 backgroundColor: theme.palette.secondary.main,
+                                border: "3px solid black",
                             }}
                         >
                             <div
@@ -250,7 +347,7 @@ const App: React.FC = () => {
                                 </ClockBox>
                                 <InfoBox
                                     icon
-                                    text="Hier können Sie alle Informationen über das erkannte Fahrzeug einsehen."
+                                    text="Here you can review all information about the identified vehicle."
                                 />
                                 <CarTitle
                                     carTitle={data.probability.winner_label}

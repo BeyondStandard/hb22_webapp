@@ -8,6 +8,8 @@ function AudioLoadingAnimation() {
             justifyContent="center"
             alignItems="center"
             style={{ height: "100vh" }}
+            direction="column"
+            spacing={3}
         >
             <Grid item>
                 <div className="boxContainer">
@@ -17,6 +19,9 @@ function AudioLoadingAnimation() {
                     <div className="box box4"></div>
                     <div className="box box5"></div>
                 </div>
+            </Grid>
+            <Grid item>
+                <div>Listening for car sounds...</div>
             </Grid>
         </Grid>
     )

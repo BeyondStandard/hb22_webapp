@@ -24,14 +24,17 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                     direction="column"
                 >
                     <Grid item>
-                        <Typography variant="h5" style={{ color: "#caffbf" }}>
+                        <Typography
+                            variant="h5"
+                            style={{ color: "#caffbf", fontWeight: "bold" }}
+                        >
                             {data.car_type
                                 ? data.probability.winner_label
                                 : "4-Wheeler"}
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subtitle2" color="lightgray">
+                        <Typography variant="subtitle2" color="white">
                             Car Type
                         </Typography>
                     </Grid>
@@ -45,12 +48,15 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                     direction="column"
                 >
                     <Grid item>
-                        <Typography variant="h5" style={{ color: "#ffd6e0" }}>
+                        <Typography
+                            variant="h5"
+                            style={{ color: "#ffd6e0", fontWeight: "bold" }}
+                        >
                             {data.engine_type ? data.engine_type : "Diesel"}
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subtitle2" color="lightgray">
+                        <Typography variant="subtitle2" color="white">
                             Engine Type
                         </Typography>
                     </Grid>
@@ -64,12 +70,17 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                     direction="column"
                 >
                     <Grid item>
-                        <Typography variant="h5" style={{ color: "#ffef9f" }}>
-                            {data.speed ? data.speed : "63 km/h"}
+                        <Typography
+                            variant="h5"
+                            style={{ color: "#ffef9f", fontWeight: "bold" }}
+                        >
+                            {data.speed
+                                ? data.speed
+                                : Math.floor(Math.random() * 101) + " km/h"}
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography variant="subtitle2" color="lightgray">
+                        <Typography variant="subtitle2" color="white">
                             Speed
                         </Typography>
                     </Grid>
