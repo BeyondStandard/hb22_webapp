@@ -156,6 +156,28 @@ const InfoContainer = styled("div")({
         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
 })
 
+const InnerShadowTop = styled("div")({
+    width: "30vw",
+    height: "3rem",
+    position: "absolute",
+    right: "1.2rem",
+    top: "1.2rem",
+    overflow: "scroll",
+    borderRadius: "12px",
+    boxShadow: `inset 0px 20px 30px -20px ${theme.palette.secondary.main}`,
+})
+
+const InnerShadowBottom = styled("div")({
+    width: "30vw",
+    height: "3rem",
+    position: "absolute",
+    right: "1.2rem",
+    bottom: "1rem",
+    overflow: "scroll",
+    borderRadius: "12px",
+    boxShadow: `inset 0px -20px 30px -20px ${theme.palette.secondary.main}`,
+})
+
 const LogoTextContainer = styled("div")({
     position: "fixed",
     top: "2rem",
@@ -179,10 +201,6 @@ const IconBackground = styled("div")({
     backgroundColor: "rgb(255, 255, 255, 0.8)",
     width: "90px",
     height: "90px",
-    // borderRadius: "50%",
-    // top: "-3px",
-    // left: "50%",
-    // transform: "translate(-50%, 0)",
 })
 
 const App: React.FC = () => {
@@ -238,7 +256,6 @@ const App: React.FC = () => {
         )
     }
 
-    console.log(data)
     const fuelType = Math.floor(Math.random() * 4)
     switch (fuelType) {
         case 0:
@@ -251,6 +268,8 @@ const App: React.FC = () => {
             data.engine_type = "Electric"
             break
     }
+
+    console.log(data)
 
     return (
         <ThemeProvider theme={theme}>
@@ -352,7 +371,6 @@ const App: React.FC = () => {
                             <div
                                 style={{
                                     overflowY: "hidden",
-                                    // boxShadow: `inset 1px 20px 30px 5px ${theme.palette.secondary.main}`,
                                 }}
                             >
                                 <ClockBox>
@@ -373,6 +391,8 @@ const App: React.FC = () => {
                                 />
                             </div>
                         </InfoContainer>
+                        <InnerShadowTop />
+                        <InnerShadowBottom />
                         <ButtonContainer>
                             <Button variant="outlined" onClick={handleReset}>
                                 Reset
