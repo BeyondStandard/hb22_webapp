@@ -24,12 +24,7 @@ function Clock() {
 
     return (
         <ClockContainer>
-            <Typography
-                variant="body1"
-                component="div"
-                gutterBottom
-                color="white"
-            >
+            <Typography variant="h6" component="div" gutterBottom color="white">
                 {Moment(date).format("hh:mm").toString()}
             </Typography>
         </ClockContainer>

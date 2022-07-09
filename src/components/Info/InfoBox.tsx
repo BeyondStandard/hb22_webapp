@@ -15,7 +15,8 @@ const InfoBox: React.FC<InfoBoxProps> = ({ icon, text }) => {
                 maxWidth: "25rem",
                 backgroundColor: "rgb(255, 255, 255, 0.1)",
                 margin: "auto",
-                border: "2px solid #c1fba4",
+                border: `2px solid ${theme.palette.info.main}`,
+                borderRadius: "4px",
             }}
         >
             <Grid

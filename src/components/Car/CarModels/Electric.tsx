@@ -14,9 +14,7 @@ export default function Model({ ...props }) {
             group.current.position.x -= 0.7
 
             group.current.position.y -= 0.1
-            group.current.rotation.y += 0.01
-
-            group.current.position.z += 0.01
+            group.current.rotation.y += 0.02
         }
     })
     const { nodes, materials } = useGLTF("/electric.gltf")

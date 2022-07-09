@@ -20,28 +20,114 @@ const pages = {
     model: 1,
 }
 
+// bus, minivan, pickup, sportscar, jeep, truck, crossover, car
 const carTypes = {
-    bus: 0,
-    electric: 1,
-    formula: 2,
-    jeep: 3,
-    pickUp: 4,
-    sedan: 5,
-    sedanSport: 6,
-    police: 7,
-    suv: 8,
-    van: 9,
-    delivery: 10,
-    car1: 11,
-    car2: 12,
-    car3: 13,
-    pickUp1: 14,
-    pickUp2: 15,
-    ambulance: 16,
+    bus: {
+        id: 0,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    electric: {
+        id: 1,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    sportscar: {
+        id: 2,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    jeep: {
+        id: 3,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    pickup: {
+        id: 4,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    car: {
+        id: 5,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    sedanSport: {
+        id: 6,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    police: {
+        id: 7,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    crossover: {
+        id: 8,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    minivan: {
+        id: 9,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    truck: {
+        id: 10,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    car1: {
+        id: 11,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    car2: {
+        id: 12,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    car3: {
+        id: 13,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    pickUp1: {
+        id: 14,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    pickUp2: {
+        id: 15,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
+    ambulance: {
+        id: 16,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.5, 0],
+    },
 }
 
 const ClockBox = styled("div")(() => ({
-    height: "3rem",
+    height: "4rem",
 }))
 
 const AppContainer = styled("div")({
@@ -77,7 +163,6 @@ const LogoTextContainer = styled("div")({
 const App: React.FC = () => {
     // const countRef = useRef()
     const [page, setPage] = useState(pages.loading)
-    const [audio, setAudio] = useState(null)
     const { data } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
     const [isPaused, setPause] = useState(false)
     const ws = useRef(null)
@@ -107,6 +192,14 @@ const App: React.FC = () => {
             }
         }
     }, [isPaused])
+    if (data) {
+        // data.probability = JSON.parse(data.probability)
+        // console.log(data)
+    } else {
+        return <div>Data endpoint not up</div>
+    }
+
+    console.log(data.car_type)
 
     return (
         <ThemeProvider theme={theme}>
@@ -125,27 +218,50 @@ const App: React.FC = () => {
                 ) : (
                     <>
                         <CarDisplayContainer>
-                            <CarContainer carType={carTypes.formula} />
+                            <CarContainer
+                                carType={
+                                    carTypes[
+                                        data.car_type as keyof typeof carTypes
+                                    ]
+                                }
+                            />
                         </CarDisplayContainer>
                         <InfoContainer
                             style={{
                                 backgroundColor: theme.palette.secondary.main,
                             }}
                         >
-                            <div style={{ overflowY: "hidden" }}>
+                            {/* <div
+                                style={{
+                                    overflow: "scroll",
+                                    height: "95%",
+                                    position: "relative",
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                }}
+                            > */}
+                            <div
+                                style={{
+                                    overflowY: "hidden",
+                                    // boxShadow: `inset 1px 20px 30px 5px ${theme.palette.secondary.main}`,
+                                }}
+                            >
                                 <ClockBox>
                                     <DigitalClock />
                                 </ClockBox>
                                 <InfoBox
                                     icon
-                                    text="Hier können Sie alle Informationen über dieses Fahrzeug einsehen."
+                                    text="Hier können Sie alle Informationen über das erkannte Fahrzeug einsehen."
                                 />
                                 <CarTitle carTitle={data.car_type} />
-                                <ServerResponseBox />
+                                <ServerResponseBox responseTime={data.time} />
                                 <CarInfoList data={data} />
                                 <ImagesBox data={data} />
-                                <AccuracyTable />
+                                <AccuracyTable
+                                    data={data.probability.confidence}
+                                />
                             </div>
+                            {/* </div> */}
                         </InfoContainer>
                     </>
                 )}

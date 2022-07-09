@@ -1,7 +1,12 @@
 import * as React from "react"
 import { useTheme, Grid, Typography } from "@mui/material"
+import { IDataProps } from "../../types/data"
 
-export default function CarInfoList() {
+interface IProps {
+    data: IDataProps
+}
+
+const CarInfoList: React.FC<IProps> = ({ data }) => {
     const theme = useTheme()
     return (
         <Grid
@@ -71,3 +76,5 @@ export default function CarInfoList() {
         </Grid>
     )
 }
+
+export default CarInfoList
