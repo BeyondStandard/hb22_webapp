@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { styled, ThemeProvider } from "@mui/material"
+import {io} from 'socket.io-client';
 
 import CarContainer from "../components/Car/CarContainer"
 import theme from "../theme/theme.js"
@@ -73,20 +74,44 @@ const LogoTextContainer = styled("div")({
     left: "3rem",
 })
 
+
+
 const App: React.FC = () => {
     // const countRef = useRef()
     const [page, setPage] = useState(pages.loading)
     const [audio, setAudio] = useState(null)
     const { data } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
+    const [isPaused, setPause] = useState(false);
+    const ws = useRef(null);
 
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            setPage(pages.model)
-        }, 100)
+        ws.current = new WebSocket("ws://localhost:3000/ws");
+        ws.current.onopen = () => console.log("ws opened");
+        ws.current.onclose = () => console.log("ws closed");
 
-        return () => clearTimeout(timeout)
-    }, [])
+        const wsCurrent = ws.current;
 
+        return () => {
+            wsCurrent.close();
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!ws.current) return;
+        // @ts-ignore
+        ws.current.onmessage = e => {
+            if (isPaused) return;
+            const message = JSON.parse(e.data);
+            if(message["state"] == true) {
+                setPage(pages.model)
+                // @ts-ignore
+                ws.current.close()
+            }
+        };
+    }, [isPaused]);
+
+
+    
     return (
         <ThemeProvider theme={theme}>
             <AppContainer>
