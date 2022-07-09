@@ -236,7 +236,7 @@ const App: React.FC = () => {
                     message["data"].probability,
                 )
                 setData(message["data"])
-                
+
                 setPage(pages.model)
 
                 // if (ws.current) ws.current.close()
@@ -257,6 +257,15 @@ const App: React.FC = () => {
     if (!data) {
         return (
             <div>
+                <LogoTextContainer>
+                    <img
+                        src={LogoTextImg}
+                        style={{
+                            width: "20rem",
+                            transform: "translate(-3rem, -8rem)",
+                        }}
+                    />
+                </LogoTextContainer>
                 <AudioLoadingAnimation />
             </div>
         )
