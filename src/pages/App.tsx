@@ -188,9 +188,10 @@ const IconBackground = styled("div")({
 const App: React.FC = () => {
     // const countRef = useRef()
     const [page, setPage] = useState(pages.loading)
-    const { data, refetch } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
+    // const { data, refetch } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
     const [isPaused, setPause] = useState(false)
     const ws = useRef<WebSocket | null>(null)
+    const [data, setData] = useState()
 
     useEffect(() => {
         ws.current = new WebSocket("ws://34.159.110.201:3001/ws")
@@ -211,7 +212,13 @@ const App: React.FC = () => {
             if (isPaused) return
             const message = JSON.parse(e.data)
             if (message["state"] == true) {
-                refetch()
+                //refetch()
+                console.log(message)
+                message["data"].probability = JSON.parse(
+                    message["data"].probability,
+                )
+                setData(message["data"])
+                
                 setPage(pages.model)
 
                 // if (ws.current) ws.current.close()
@@ -232,7 +239,6 @@ const App: React.FC = () => {
     if (!data) {
         return (
             <div>
-                <div>Data endpoint not up</div>
                 <AudioLoadingAnimation />
             </div>
         )
