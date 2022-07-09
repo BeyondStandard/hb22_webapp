@@ -20,78 +20,34 @@ export default function Model({ ...props }) {
     const { nodes, materials } = useGLTF("/van.gltf")
     return (
         <group ref={group} {...props} dispose={null}>
-            <group position={[0, 0.2, -0.1]}>
+            <group rotation={[Math.PI / 2, 0, 0]}>
                 <mesh
-                    geometry={nodes.Mesh_body019.geometry}
-                    material={materials["plastic.019"]}
+                    geometry={nodes.van_1.geometry}
+                    material={materials["plastic.021"]}
                 />
                 <mesh
-                    geometry={nodes.Mesh_body019_1.geometry}
+                    geometry={nodes.van_2.geometry}
                     material={materials["paintBlue.002"]}
                 />
                 <mesh
-                    geometry={nodes.Mesh_body019_2.geometry}
-                    material={materials["lightFront.017"]}
+                    geometry={nodes.van_3.geometry}
+                    material={materials["lightFront.019"]}
                 />
                 <mesh
-                    geometry={nodes.Mesh_body019_3.geometry}
-                    material={materials["_defaultMat.019"]}
+                    geometry={nodes.van_4.geometry}
+                    material={materials["_defaultMat.021"]}
                 />
                 <mesh
-                    geometry={nodes.Mesh_body019_4.geometry}
-                    material={materials["lightBack.014"]}
+                    geometry={nodes.van_5.geometry}
+                    material={materials["lightBack.015"]}
                 />
                 <mesh
-                    geometry={nodes.Mesh_body019_5.geometry}
-                    material={materials["window.019"]}
-                />
-            </group>
-            <group
-                position={[-0.35, 0.3, 0.76]}
-                rotation={[-Math.PI, 0, 0]}
-                scale={-1}
-            >
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016.geometry}
-                    material={materials["carTire.019"]}
+                    geometry={nodes.van_6.geometry}
+                    material={materials["window.021"]}
                 />
                 <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016_1.geometry}
-                    material={materials["_defaultMat.019"]}
-                />
-            </group>
-            <group position={[0.35, 0.3, 0.76]}>
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016.geometry}
-                    material={materials["carTire.019"]}
-                />
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016_1.geometry}
-                    material={materials["_defaultMat.019"]}
-                />
-            </group>
-            <group
-                position={[-0.35, 0.3, -0.76]}
-                rotation={[-Math.PI, 0, 0]}
-                scale={-1}
-            >
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016.geometry}
-                    material={materials["carTire.019"]}
-                />
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016_1.geometry}
-                    material={materials["_defaultMat.019"]}
-                />
-            </group>
-            <group position={[0.35, 0.3, -0.76]}>
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016.geometry}
-                    material={materials["carTire.019"]}
-                />
-                <mesh
-                    geometry={nodes.Mesh_wheel_frontLeft016_1.geometry}
-                    material={materials["_defaultMat.019"]}
+                    geometry={nodes.van_7.geometry}
+                    material={materials["carTire.021"]}
                 />
             </group>
         </group>

@@ -8,7 +8,6 @@ import { useFrame } from "@react-three/fiber"
 
 export default function Model({ ...props }) {
     const group = useRef()
-    const { nodes, materials } = useGLTF("/suv.gltf")
     useFrame((state, delta) => {
         // console.log(group.current.position.x)
         if (group.current.position.x >= 0.5) {
@@ -18,6 +17,7 @@ export default function Model({ ...props }) {
             group.current.rotation.y += 0.02
         }
     })
+    const { nodes, materials } = useGLTF("/suv.gltf")
     return (
         <group ref={group} {...props} dispose={null}>
             <group rotation={[Math.PI / 2, 0, 0]}>

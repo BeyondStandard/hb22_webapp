@@ -26,8 +26,8 @@ const pages = {
 const carTypes = {
     bus: {
         id: 0,
-        scale: [2, 2, 2],
-        position: [10, 0, 0],
+        scale: [0.05, 0.05, 0.05],
+        position: [0, -1, 0],
         rotation: [0.2, -1.5, 0],
     },
     electric: {
@@ -51,14 +51,14 @@ const carTypes = {
     pickup: {
         id: 4,
         scale: [2, 2, 2],
-        position: [10, 0, 0],
-        rotation: [0.2, -1.5, 0],
-    },
-    sedan: {
-        id: 5,
-        scale: [2, 2, 2],
         position: [0, -1, 0],
         rotation: [0.2, -1.5, 0],
+    },
+    car: {
+        id: 5,
+        scale: [2, 2, 2],
+        position: [10, 0, 0],
+        rotation: [0.2, -1.3, 0],
     },
     sedanSport: {
         id: 6,
@@ -123,8 +123,8 @@ const carTypes = {
     outsidecars: {
         id: 16,
         scale: [2, 2, 2],
-        position: [10, 0, 0],
-        rotation: [0.2, -1.5, 0],
+        position: [10, 2, 0],
+        rotation: [0.1, -1, 0],
     },
 }
 
@@ -187,7 +187,7 @@ const IconBackground = styled("div")({
 
 const App: React.FC = () => {
     // const countRef = useRef()
-    const [page, setPage] = useState(pages.loading)
+    const [page, setPage] = useState(pages.model)
     const { data, refetch } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
     const [isPaused, setPause] = useState(false)
     const ws = useRef<WebSocket | null>(null)
@@ -239,6 +239,18 @@ const App: React.FC = () => {
     }
 
     console.log(data)
+    const fuelType = Math.floor(Math.random() * 4)
+    switch (fuelType) {
+        case 0:
+            data.engine_type = "Gasoline"
+            break
+        case 1:
+            data.engine_type = "Diesel"
+            break
+        case 2:
+            data.engine_type = "Electric"
+            break
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -269,8 +281,10 @@ const App: React.FC = () => {
                         <CarDisplayContainer>
                             <CarContainer
                                 carType={
+                                    // bus, minivan, pickup, sportscar, jeep, truck, crossover, car, outsidecars
                                     carTypes[
-                                        data.probability.winner_label.toLowerCase() as keyof typeof carTypes
+                                        // data.probability.winner_label.toLowerCase() as keyof typeof carTypes
+                                        "car"
                                     ]
                                 }
                             />
@@ -290,7 +304,7 @@ const App: React.FC = () => {
                                         textAlign: "center",
                                     }}
                                 >
-                                    {data.engine_type != "gasoline" && (
+                                    {data.engine_type != "Gasoline" && (
                                         <IconBackground />
                                     )}
                                     <img src={gasolineImage} width="50px" />
@@ -305,10 +319,10 @@ const App: React.FC = () => {
                                         textAlign: "center",
                                     }}
                                 >
-                                    {data.engine_type != "diesel" ||
-                                        (!data.engine_type && (
-                                            <IconBackground />
-                                        ))}
+                                    {(data.engine_type != "Diesel" ||
+                                        !data.engine_type) && (
+                                        <IconBackground />
+                                    )}
                                     <img src={dieselImage} width="50px" />
                                     <Typography variant="body1">
                                         Diesel
@@ -319,7 +333,7 @@ const App: React.FC = () => {
                                     xs={4}
                                     style={{ textAlign: "center" }}
                                 >
-                                    {data.engine_type != "electric" && (
+                                    {data.engine_type != "Electric" && (
                                         <IconBackground />
                                     )}
                                     <img src={electricImage} width="50px" />
