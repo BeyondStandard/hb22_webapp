@@ -76,7 +76,9 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                         >
                             {data.speed
                                 ? data.speed
-                                : Math.floor(Math.random() * 101) + " km/h"}
+                                : Math.floor(Math.random() * 101) +
+                                  20 +
+                                  " km/h"}
                         </Typography>
                     </Grid>
                     <Grid item>

@@ -123,8 +123,8 @@ const carTypes = {
     outsidecars: {
         id: 16,
         scale: [2, 2, 2],
-        position: [10, 2, 0],
-        rotation: [0.1, -1, 0],
+        position: [10, 0.5, 0],
+        rotation: [0.1, -1.2, 0],
     },
 }
 
@@ -187,7 +187,7 @@ const IconBackground = styled("div")({
 
 const App: React.FC = () => {
     // const countRef = useRef()
-    const [page, setPage] = useState(pages.model)
+    const [page, setPage] = useState(pages.loading)
     const { data, refetch } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
     const [isPaused, setPause] = useState(false)
     const ws = useRef<WebSocket | null>(null)
@@ -283,8 +283,7 @@ const App: React.FC = () => {
                                 carType={
                                     // bus, minivan, pickup, sportscar, jeep, truck, crossover, car, outsidecars
                                     carTypes[
-                                        // data.probability.winner_label.toLowerCase() as keyof typeof carTypes
-                                        "car"
+                                        data.probability.winner_label.toLowerCase() as keyof typeof carTypes
                                     ]
                                 }
                             />

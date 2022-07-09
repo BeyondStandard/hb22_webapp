@@ -12,7 +12,7 @@ export default function Model({ ...props }) {
         // console.log(group.current.position.x)
         if (group.current.position.x >= 0.5) {
             group.current.position.x -= 0.7
-            group.current.position.y -= 0.25
+            group.current.position.y -= 0.15
         }
     })
     const { nodes, materials } = useGLTF("/ambulance.gltf")
