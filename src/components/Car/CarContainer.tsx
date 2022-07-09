@@ -2,7 +2,7 @@ import React, { Suspense } from "react"
 // import PropTypes from 'prop-types'
 // import { Box } from '@mui/system'
 import { styled, useTheme } from "@mui/material"
-import { Canvas, useFrame, useThree } from "@react-three/fiber"
+import { Canvas } from "@react-three/fiber"
 // import CarModel from "./CarModel"
 import { OrbitControls, Html, useProgress } from "@react-three/drei"
 
@@ -41,9 +41,22 @@ const Dot = styled("div")(() => ({
 }))
 
 interface ICarContainerProps {
-    carType: number
+    carType: {
+        id: number
+        position?: Array<number>
+        rotation?: Array<number>
+        scale?: Array<number>
+    }
 }
 
+const defaultProps: ICarContainerProps = {
+    carType: {
+        id: 0,
+        position: [2, 2, 2],
+        rotation: [10, 0, 0],
+        scale: [0.2, -1.5, 0],
+    },
+}
 const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
     const theme = useTheme()
     // const carModel = React.useRef()
@@ -69,11 +82,11 @@ const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
         ambulance,
     ]
 
-    if (carType < 0 || carType >= models.length) {
+    if (carType.id < 0 || carType.id >= models.length) {
         return <div>Model could not be loaded</div>
     }
 
-    const Model = models[carType]
+    const Model = models[carType.id]
 
     // useFrame(({ clock }) => {
     //     const a = clock.getElapsedTime()
@@ -101,13 +114,13 @@ const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
                     <OrbitControls
                         enableZoom={false}
                         rotateSpeed={2}
-                        // autoRotate={true}
+                        autoRotate={true}
                         autoRotateSpeed={5}
                     />
                     <Model
-                        scale={[2, 2, 2]}
-                        position={[10, 0, 0]}
-                        rotation={[0.2, -1.5, 0]}
+                        scale={carType.scale}
+                        position={carType.position}
+                        rotation={carType.rotation}
                     />
                 </Suspense>
             </Canvas>
@@ -115,5 +128,7 @@ const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
         // </CarBox>
     )
 }
+
+CarContainer.defaultProps = defaultProps
 
 export default CarContainer

@@ -4,14 +4,33 @@ import ImageListItem from "@mui/material/ImageListItem"
 import ImageListItemBar from "@mui/material/ImageListItemBar"
 import { Paper, useTheme } from "@mui/material"
 import AudioPlayer from "./AudioPlayer"
+import { IDataProps } from "../../types/data"
 
-export default function ImagesBox({ data }: any) {
+interface IProps {
+    data: IDataProps
+}
+
+const ImagesBox: React.FC<IProps> = ({ data }) => {
     const theme = useTheme()
+
+    // console.log(image)
+
+    const itemData = [
+        {
+            img: `data:image/jpeg;base64, ${data.probability.Spectrograph}`,
+            title: "Spectrograph",
+        },
+        {
+            img: `data:image/jpeg;base64, ${data.probability.Waveform}`,
+            title: "Waveform",
+        },
+    ]
+
     return (
         <Paper
             style={{
                 // backgroundColor: theme.palette.secondary.main,
-                border: "2px solid lightblue",
+                border: `2px solid ${theme.palette.info.main}`,
                 maxWidth: "25rem",
                 margin: "auto",
             }}
@@ -26,15 +45,15 @@ export default function ImagesBox({ data }: any) {
                 {itemData.map((item) => (
                     <ImageListItem key={item.img} cols={3}>
                         <img
-                            src={`${item.img}?w=248&fit=crop&auto=format`}
-                            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                            // src={`${item.img}?w=248&fit=crop&auto=format`}
+                            src={item.img}
+                            // srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                             alt={item.title}
                             loading="lazy"
-                            style={{ height: "5rem" }}
                         />
                         <ImageListItemBar
                             title={item.title}
-                            subtitle={<span>by: {item.author}</span>}
+                            // subtitle={<span>by: {item.author}</span>}
                             position="below"
                         />
                     </ImageListItem>
@@ -45,15 +64,4 @@ export default function ImagesBox({ data }: any) {
     )
 }
 
-const itemData = [
-    {
-        img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-        title: "Breakfast",
-        author: "@bkristastucchio",
-    },
-    {
-        img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-        title: "Burger",
-        author: "@rollelflex_graphy726",
-    },
-]
+export default ImagesBox
