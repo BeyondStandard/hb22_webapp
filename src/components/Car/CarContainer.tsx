@@ -1,9 +1,6 @@
 import React, { Suspense } from "react"
-// import PropTypes from 'prop-types'
-// import { Box } from '@mui/system'
 import { styled, useTheme } from "@mui/material"
 import { Canvas } from "@react-three/fiber"
-// import CarModel from "./CarModel"
 import { OrbitControls, Html, useProgress } from "@react-three/drei"
 
 import car01 from "./CarModels/Low-poly-car01.js"
@@ -59,8 +56,6 @@ const defaultProps: ICarContainerProps = {
 }
 const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
     const theme = useTheme()
-    // const carModel = React.useRef()
-    // const [model, setModel] = React.useState<JSX.Element | undefined>()
 
     const models = [
         bus,
@@ -88,16 +83,7 @@ const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
 
     const Model = models[carType.id]
 
-    // useFrame(({ clock }) => {
-    //     const a = clock.getElapsedTime()
-    //     console.log(a) // the value will be 0 at scene initialization and grow each frame
-    //     if (carModel.current) {
-    //         carModel.current.rotation.x = clock.getElapsedTime()
-    //     }
-    // })
-
     return (
-        // <CarBox>
         <>
             <Dot style={{ backgroundColor: "#B6B6B6" }} />
             <Canvas
@@ -107,10 +93,14 @@ const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
                 }}
             >
                 <ambientLight intensity={0.3} />
-                {/* <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} /> */}
+                <spotLight
+                    position={[10, 10, 10]}
+                    angle={0.15}
+                    penumbra={1}
+                    intensity={0.75}
+                    decay={1}
+                />
                 <Suspense fallback={<Loader />}>
-                    {/* <CarModel /> */}
-                    {/* <ObjModelLoader /> */}
                     <OrbitControls
                         enableZoom={false}
                         rotateSpeed={2}
@@ -125,7 +115,6 @@ const CarContainer: React.FC<ICarContainerProps> = ({ carType }) => {
                 </Suspense>
             </Canvas>
         </>
-        // </CarBox>
     )
 }
 

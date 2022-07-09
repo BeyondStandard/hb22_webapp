@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { styled, ThemeProvider } from "@mui/material"
-import { io } from "socket.io-client"
+import { styled, ThemeProvider, Button } from "@mui/material"
 
 import CarContainer from "../components/Car/CarContainer"
 import theme from "../theme/theme.js"
@@ -160,46 +159,55 @@ const LogoTextContainer = styled("div")({
     left: "3rem",
 })
 
+const ButtonContainer = styled("div")({
+    position: "absolute",
+    left: "1rem",
+    bottom: "1rem",
+})
+
 const App: React.FC = () => {
     // const countRef = useRef()
     const [page, setPage] = useState(pages.loading)
     const { data } = useFetch(`http://34.159.110.201:3001/latest`) //${process.env.REACT_APP_BACKEND_URL}
     const [isPaused, setPause] = useState(false)
-    const ws = useRef(null)
+    const ws = useRef<WebSocket | null>(null)
 
     useEffect(() => {
         ws.current = new WebSocket("ws://34.159.110.201:3001/ws")
         ws.current.onopen = () => console.log("ws opened")
         ws.current.onclose = () => console.log("ws closed")
 
-        const wsCurrent = ws.current
+        // const wsCurrent = ws.current
 
-        return () => {
-            wsCurrent.close()
-        }
+        // return () => {
+        //     wsCurrent.close()
+        // }
     }, [])
 
     useEffect(() => {
         if (!ws.current) return
-        // @ts-ignore
+
         ws.current.onmessage = (e) => {
             if (isPaused) return
             const message = JSON.parse(e.data)
             if (message["state"] == true) {
                 setPage(pages.model)
-                // @ts-ignore
-                ws.current.close()
+
+                // if (ws.current) ws.current.close()
             }
         }
     }, [isPaused])
-    if (data) {
-        // data.probability = JSON.parse(data.probability)
-        // console.log(data)
-    } else {
+
+    const handleReset = () => {
+        setPause(false)
+        setPage(pages.loading)
+    }
+
+    if (!data) {
         return <div>Data endpoint not up</div>
     }
 
-    console.log(data.car_type)
+    console.log(data)
 
     return (
         <ThemeProvider theme={theme}>
@@ -231,15 +239,6 @@ const App: React.FC = () => {
                                 backgroundColor: theme.palette.secondary.main,
                             }}
                         >
-                            {/* <div
-                                style={{
-                                    overflow: "scroll",
-                                    height: "95%",
-                                    position: "relative",
-                                    top: "50%",
-                                    transform: "translateY(-50%)",
-                                }}
-                            > */}
                             <div
                                 style={{
                                     overflowY: "hidden",
@@ -253,7 +252,9 @@ const App: React.FC = () => {
                                     icon
                                     text="Hier können Sie alle Informationen über das erkannte Fahrzeug einsehen."
                                 />
-                                <CarTitle carTitle={data.car_type} />
+                                <CarTitle
+                                    carTitle={data.probability.winner_label}
+                                />
                                 <ServerResponseBox responseTime={data.time} />
                                 <CarInfoList data={data} />
                                 <ImagesBox data={data} />
@@ -261,13 +262,14 @@ const App: React.FC = () => {
                                     data={data.probability.confidence}
                                 />
                             </div>
-                            {/* </div> */}
                         </InfoContainer>
+                        <ButtonContainer>
+                            <Button variant="outlined" onClick={handleReset}>
+                                Reset
+                            </Button>
+                        </ButtonContainer>
                     </>
                 )}
-                {/* <BottomNavigationContainer>
-                    <FixedBottomNavigation setSubPages={setSubPage} />
-                </BottomNavigationContainer> */}
             </AppContainer>
         </ThemeProvider>
     )

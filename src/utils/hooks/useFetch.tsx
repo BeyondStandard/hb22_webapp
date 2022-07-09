@@ -15,7 +15,6 @@ function useFetch(url: string) {
             .then((response) => {
                 time = new Date().getTime() - time
                 response.data.time = time
-                // response.data.car_type = "electric"
                 response.data.probability = JSON.parse(
                     response.data.probability,
                 )
@@ -31,9 +30,15 @@ function useFetch(url: string) {
 
     const refetch = () => {
         setLoading(true)
+        let time = new Date().getTime()
         axios
             .get(url)
             .then((response) => {
+                time = new Date().getTime() - time
+                response.data.time = time
+                response.data.probability = JSON.parse(
+                    response.data.probability,
+                )
                 setData(response.data)
             })
             .catch((err) => {

@@ -24,8 +24,10 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                     direction="column"
                 >
                     <Grid item>
-                        <Typography variant="h5" style={{ color: "#90f1ef" }}>
-                            Example
+                        <Typography variant="h5" style={{ color: "#caffbf" }}>
+                            {data.car_type
+                                ? data.probability.winner_label
+                                : "4-Wheeler"}
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -44,7 +46,7 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                 >
                     <Grid item>
                         <Typography variant="h5" style={{ color: "#ffd6e0" }}>
-                            Example
+                            {data.engine_type ? data.engine_type : "Diesel"}
                         </Typography>
                     </Grid>
                     <Grid item>
@@ -63,7 +65,7 @@ const CarInfoList: React.FC<IProps> = ({ data }) => {
                 >
                     <Grid item>
                         <Typography variant="h5" style={{ color: "#ffef9f" }}>
-                            Example
+                            {data.speed ? data.speed : "63 km/h"}
                         </Typography>
                     </Grid>
                     <Grid item>
